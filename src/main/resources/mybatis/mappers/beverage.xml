@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="beverage">
+
+	<insert id="insertBeverage" parameterType="Beverage">
+		insert into
+		beverage_tb(no,name,count,price,capacity,filename,state)
+		values(beverage_tb_seq.nextval,#{name},#{count},#{price},#{capacity},#{fileName},#{state})
+	</insert>
+	
+	<select id="selectBeverageByPK" resultType="Beverage" parameterType="hashmap">
+		select * from beverage_tb where no =#{no} 
+	</select>	
+	<update id="updateBeverage" parameterType="Beverage">
+		update beverage_tb set name=#{name}, filename=#{fileName},
+		price=#{price},count=#{count},capacity=#{capacity},
+		state=#{state} where no=#{no}
+	</update>
+	
+	<update id="updateBeverageCount" parameterType="hashmap">
+		update beverage_tb set count=#{updateCount} where no=#{no}
+	</update>
+	<update id="updateBeverageSellCount" parameterType="hashmap">
+		update beverage_tb set sellCount=#{updateCount} where no=#{no}
+	</update>
+
+	<delete id="deleteBeverage" parameterType="hashmap">
+		delete from beverage_tb where no=#{no}
+	</delete>
+	
+	<select id="selectBeverageCount" resultType="int" parameterType="hashmap">
+		select nvl(count(*),0) from beverage_tb 
+	</select>
+	
+	<select id="selectBeverageList" resultType="Beverage" parameterType="hashmap">
+		select * from (select rownum rnum ,a.* from 
+		(select * from beverage_tb order
+		by regdate desc)a) where rnum between #{startRow} and #{endRow}
+	</select>
+</mapper>

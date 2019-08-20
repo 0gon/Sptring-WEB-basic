@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="sample">
+	<!--  주석 해제 후 Sample 와 sample 만 바꿔주고, 쿼리문 손보기 -->
+	
+	<!-- <insert id="insertSample" parameterType="Sample">
+		insert into sample_tb(no,nickname, password, email)
+		values(sample_tb_seq.nextval,#{nickname}, #{password},#{email})
+	</insert>
+	
+	<update id="updateSample" parameterType="Sample">
+		update sample_tb set nickname=#{nickname}, password=#{password}
+		where no=#{no}
+	</update>
+	
+	<delete id="deleteSample" parameterType="hashmap">
+		delete from sample_tb where no=#{no}
+	</delete>
+	
+	<select id="selectSampleCount"  resultType="int" >
+		select nvl(count(*),0) from sample_tb 
+	</select>
+	
+	<select id="selectSampleList"  resultType="Sample" parameterType="hashmap" >
+		select * from (select rownum rnum ,a.* from 
+		(select * from sample_tb order by regdate desc) a ) 
+		where rnum between #{startRow} and #{endRow} 
+	</select>
+	
+	<select id="selectSampleByPK" resultType="Sample"  parameterType="hashmap">
+		select * from sample_tb where no=#{no}
+	</select> -->
+	
+</mapper>

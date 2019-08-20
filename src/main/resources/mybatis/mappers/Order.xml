@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="order">
+	
+	<insert id="insertOrder" parameterType="Order">
+		insert into
+		order_tb(no,userNo,beverageNo,count,beverageName, beveragePrice)
+		values(order_tb_seq.nextval,#{userNo},#{beverageNo},#{count},#{beverageName},#{beveragePrice})
+	</insert>
+	
+	<select id="selectOrderByPK" resultType="Order" parameterType="hashmap">
+		select * from order_tb where no =#{no} 
+	</select>	
+	
+	<update id="updateOrder" parameterType="Order">
+		update order_tb set hamburger=#{hamburger},totalPrice=totalPrice+#{totalPrice},
+		  beverage=#{beverage}, sideMenu=#{sideMenu} where no=#{no}
+		  
+	</update>
+	
+	<select id="selectOrderCount"  resultType="int" >
+		select nvl(count(*),0) from order_tb 
+	</select>
+	
+	<select id="selectOrderList"  resultType="Order" parameterType="hashmap" >
+		select * from (select rownum rnum ,a.* from 
+		(select * from order_tb order by regdate desc) a ) 
+		where rnum between #{startRow} and #{endRow} 
+	</select>
+</mapper>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="user">
+	
+	<insert id="insertUser" parameterType="hashmap">
+		insert into user_tb(no,nickname, password, email)
+		values(user_tb_seq.nextval,#{nickname}, #{password},#{email})
+	</insert>
+	
+	<update id="updateUser" parameterType="User">
+		update user_tb set email=#{email},nickname=#{nickname}, password=#{password},
+		grade=#{grade}
+		where no=#{no}
+	</update>
+	<update id="updateUserGrade" parameterType="User">
+		update user_tb set grade=2 where no=#{no}
+	</update>
+	
+	<delete id="deleteUser" parameterType="hashmap">
+		delete from user_tb where no=#{no}
+	</delete>
+	
+	<select id="selectUserCount"  resultType="int" >
+		select nvl(count(*),0) from user_tb 
+	</select>
+	
+	<select id="selectUserList"  resultType="User" parameterType="hashmap" >
+		select * from (select rownum rnum ,a.* from 
+		(select * from user_tb order by regdate desc) a ) 
+		where rnum between #{startRow} and #{endRow} 
+	</select>
+	
+	<select id="selectUserInfo" resultType="User"  parameterType="hashmap">
+		select * from user_tb where email=#{email}
+	</select>
+	<select id="selectUserInfoByPK" resultType="User"  parameterType="hashmap">
+		select * from user_tb where no=#{no}
+	</select>
+	
+	<select id="selectNickname" resultType="User"  parameterType="hashmap">
+		select * from user_tb where nickname=#{nickname}
+	</select>
+</mapper>

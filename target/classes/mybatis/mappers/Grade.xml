@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="grade">
+
+	<select id="selectGradeInfo" resultType="Grade"
+		parameterType="hashmap">
+		select * from grade_tb where no=#{no}
+	</select>
+
+	<select id="selectGradeCount" resultType="int">
+		select
+		nvl(count(*),0) from grade_tb
+	</select>
+
+	<select id="selectGradeList" resultType="Grade"
+		parameterType="hashmap">
+		select * from (select rownum rnum ,a.* from
+		(select * from grade_tb order by no desc) a )
+		where rnum between #{startRow} and #{endRow}
+	</select>
+
+	<insert id="insertGrade" parameterType="Grade">
+		insert into
+		grade_tb(no,name)
+		values(grade_tb_seq.nextval,#{name})
+	</insert>
+
+	<update id="updateGrade" parameterType="Grade">
+		update grade_tb set
+		name=#{name}
+		where no=#{no}
+	</update>
+
+	<delete id="deleteGrade" parameterType="hashmap">
+		delete from grade_tb where
+		no=#{no}
+	</delete>
+</mapper>

@@ -1,0 +1,40 @@
+CREATE table user_tb (
+no int primary key,
+email varchar2(100) ,
+nickname varchar2(100),
+password varchar2(50) not null,
+grade int default 1 REFERENCES grade_tb(no) ON DELETE CASCADE ,
+regdate Date default sysdate
+);
+
+
+
+CREATE table grade_tb (
+no int primary key,
+name varchar2(100)
+);
+
+
+no int primary key,
+name varchar2(100) ,
+filename varchar2(150),
+price int,
+sellCount int,
+count int,
+capacity int,
+state int,
+regdate Date default sysdate
+
+
+Drop table order_tb PURGE;
+
+CREATE table order_tb (
+no int primary key,
+userNo int REFERENCES user_tb(no) ON DELETE CASCADE ,
+beverageNo int REFERENCES beverage_tb(no) ON DELETE CASCADE ,
+beverageName varchar2(150),
+beveragePrice int,
+count int,
+regdate Date default sysdate
+
+);

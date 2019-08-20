@@ -1,0 +1,69 @@
+<!--SELECT  -->
+	<select id="SELECT_BASE" resultType="Board" parameterType="hashmap">
+		select * from TABLE_NAME where condition =#{condition} 
+	</select>
+
+	<select id="SELECT_JOIN" resultType="Board" parameterType="hashmap">
+		select * from TABLE_NAME where condition1 =#{condition1} and 
+		condition1=(select max(boardid) from TABLE_NAME where studynum=#{studynum})
+	</select>
+	
+	<select id="SELECT_LIKE" resultType="Room"
+		parameterType="hashmap">
+		select * from TABLE_NAME where studyName like
+		'%'||#{studyName}||'%'
+	</select>
+<!--  -->	
+<!-- LIST -->
+	<select id="COUNT" resultType="int" parameterType="hashmap">
+		select nvl(count(*),0) from TABLE_NAME 
+	</select>
+	
+	<select id="LIST" resultType="Board" parameterType="hashmap">
+		select * from (select rownum rnum ,a.* from 
+		(select * from TABLE_NAME where CONDITION = #{CONDITION} order
+		by #{col} desc)a) where rnum between #{startRow} and #{endRow}
+	</select>
+<!--  -->	
+<!-- SEARCH -->
+	<select id="SEARCH_COUNT" resultType="int" parameterType="hashmap">
+		<if test="option eq 'name'">
+		select nvl(count(*),0) from drinks where name like '%'||#{keyword}||'%'
+		</if>
+		<if test="option eq 'category'">
+		select nvl(count(*),0) from drinks where category like '%'||#{keyword}||'%'
+		</if>
+	</select>
+	
+	<select id="SEARCH_LIST" resultType="User" parameterType="hashmap">
+		<if test="option eq 'userid'">
+			select * from (select rownum rnum ,a.* from 
+			(select * from cafeuser where userid 
+			like '%'||#{keyword}||'%' order by regdate desc)a) 
+			where rnum  between #{startRow} and #{endRow} 
+		</if>
+		<if test="option eq 'email'">
+			select * from (select rownum rnum ,a.* from 
+			(select * from cafeuser where email 
+			like '%'||#{keyword}||'%' order by regdate desc)a)
+			where rnum  between #{startRow} and #{endRow} 
+		</if>
+	</select>
+<!--  -->
+<!-- 삼인방 -->
+	<insert id="INSERT" parameterType="Board">
+		insert into TABLE_NAME(no,col2,col3)
+		values(SEQ_NAME._seq.nextval,#{col2},#{col3})
+	</insert>
+	
+	<update id="UPDATE" parameterType="Board">
+		update TABLE_NAME set col1=#{col1}, col2=#{col2},
+		col3=#{col3} where no=#{no}
+	</update>
+
+	<delete id="DELETE" parameterType="hashmap">
+		delete from TABLE_NAME where num=#{num}
+	</delete>
+<!--  -->
+
+	
